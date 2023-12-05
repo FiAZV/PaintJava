@@ -8,12 +8,12 @@ public class Circulo extends Figura
 	
     public Circulo (int x, int y, int r)
     {
-        this (x, y, r, Color.BLACK);
+        this (x, y, r, Color.BLACK, new Color(0f,0f,0f,0f));
     }
 	
-    public Circulo (int x, int y, int r, Color cor)
+    public Circulo (int x, int y, int r, Color cor, Color corPreenchimento)
     {
-        super (cor);
+        super (cor, corPreenchimento);
 
         this.centro = new Ponto (x,y);
         this.raio   = r;
@@ -61,8 +61,19 @@ public class Circulo extends Figura
 
     public void torneSeVisivel (Graphics g)
     {
-        g.setColor (this.cor);
-        g.drawOval (this.centro.getX()-raio, this.centro.getY()-raio, 2*raio, 2*raio);
+        Graphics2D graphSettings = (Graphics2D)g;
+
+        // Antialiasing cleans up the jagged lines and defines rendering rules
+        graphSettings.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Defines the line width of the stroke
+        graphSettings.setStroke(new BasicStroke(4));
+
+        graphSettings.setColor(this.corPreenchimento);
+        graphSettings.fillOval(this.centro.getX()-raio, this.centro.getY()-raio, 2*raio, 2*raio);
+
+        graphSettings.setColor(this.cor);
+        graphSettings.drawOval(this.centro.getX()-raio, this.centro.getY()-raio, 2*raio, 2*raio);
 			
     }
 

@@ -54,6 +54,14 @@ public class Ponto extends Figura
 	  
     public void torneSeVisivel (Graphics g)
     {
+        Graphics2D graphSettings = (Graphics2D)g;
+
+        // Antialiasing cleans up the jagged lines and defines rendering rules
+        graphSettings.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Defines the line width of the stroke
+        graphSettings.setStroke(new BasicStroke(4));
+
     	g.setColor (this.cor);
     	g.drawLine (this.x,this.y,this.x,this.y);
     }

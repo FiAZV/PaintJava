@@ -3,15 +3,23 @@ import java.awt.*;
 public abstract class Figura
 {
     protected Color cor;
-	  
+    protected Color corPreenchimento;
+
     protected Figura ()
     {
-        this (Color.BLACK);
+        this (Color.BLACK, new Color(0f,0f,0f,0f));
     }
-	  
+
     protected Figura (Color cor)
     {
         this.cor = cor;
+        this.corPreenchimento = new Color(0f,0f,0f,0f);
+    }
+	  
+    protected Figura (Color cor, Color corPreenchimento)
+    {
+        this.cor = cor;
+        this.corPreenchimento = corPreenchimento;
     }
 	  
     public void setCor (Color cor)
