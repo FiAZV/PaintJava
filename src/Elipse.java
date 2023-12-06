@@ -9,12 +9,12 @@ public class Elipse extends Figura
 	
     public Elipse (int x, int y, int r1, int r2)
     {
-        this (x, y, r1, r2, Color.BLACK);
+        this (x, y, r1, r2, Color.BLACK, new Color(0f,0f,0f,0f));
     }
 	
-    public Elipse (int x, int y, int r1, int r2, Color cor)
+    public Elipse (int x, int y, int r1, int r2, Color cor, Color corPreenchimento)
     {
-        super (cor);
+        super (cor, corPreenchimento);
 
         this.centro = new Ponto (x,y);
 
@@ -84,8 +84,11 @@ public class Elipse extends Figura
         // Defines the line width of the stroke
         graphSettings.setStroke(new BasicStroke(4));
 
-        g.setColor (this.cor);
-        g.drawOval (this.centro.getX()-raio1, this.centro.getY()-raio2, 2*raio1, 2*raio2);
+        graphSettings.setColor (this.corPreenchimento);
+        graphSettings.fillOval (this.centro.getX()-raio1, this.centro.getY()-raio2, 2*raio1, 2*raio2);
+
+        graphSettings.setColor (this.cor);
+        graphSettings.drawOval (this.centro.getX()-raio1, this.centro.getY()-raio2, 2*raio1, 2*raio2);
 			
     }
 

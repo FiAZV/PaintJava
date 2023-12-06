@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.imageio.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.*;
 import java.util.*;
 
@@ -18,6 +21,7 @@ public class Janela extends JFrame
                       btnElipse  = new JButton ("Elipse"),
                       btnQuadrado  = new JButton ("Quadrado"),
                       btnRetangulo = new JButton ("Retângulo"),
+                      btnTexto = new JButton ("Texto"),
                       btnCores   = new JButton ("Cores"),
                       btnCores2   = new JButton ("Preenchimento"),
                       btnAbrir   = new JButton ("Abrir"),
@@ -26,7 +30,7 @@ public class Janela extends JFrame
                       btnSair    = new JButton ("Sair");
 
     protected MeuJPanel pnlDesenho = new MeuJPanel ();
-    
+
     protected JLabel statusBar1 = new JLabel ("Mensagem:"),
                      statusBar2 = new JLabel ("Coordenada:");
 
@@ -38,7 +42,7 @@ public class Janela extends JFrame
     protected boolean esperaInicioRetangulo, esperaFimRetangulo;
 //    protected boolean escolhaDeCor;
 
-    protected Color corPrincipal = Color.BLACK, corPreenchimento = Color.BLACK;
+    protected Color corPrincipal = Color.BLACK, corPreenchimento = new Color(0f, 0f, 0f, 0f);
     protected Ponto p1;
     
     protected Vector<Figura> figuras = new Vector<Figura>();
@@ -49,7 +53,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnPontoImg = ImageIO.read(getClass().getResource("images/ponto.jpg"));
+            Image btnPontoImg = ImageIO.read(getClass().getResource("images/ponto.png"));
             btnPonto.setIcon(new ImageIcon(btnPontoImg));
         }
         catch (IOException e)
@@ -62,7 +66,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnLinhaImg = ImageIO.read(getClass().getResource("images/linha.jpg"));
+            Image btnLinhaImg = ImageIO.read(getClass().getResource("images/linha.png"));
             btnLinha.setIcon(new ImageIcon(btnLinhaImg));
         }
         catch (IOException e)
@@ -75,7 +79,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnCirculoImg = ImageIO.read(getClass().getResource("images/circulo.jpg"));
+            Image btnCirculoImg = ImageIO.read(getClass().getResource("images/circulo.png"));
             btnCirculo.setIcon(new ImageIcon(btnCirculoImg));
         }
         catch (IOException e)
@@ -88,7 +92,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnElipseImg = ImageIO.read(getClass().getResource("images/elipse.jpg"));
+            Image btnElipseImg = ImageIO.read(getClass().getResource("images/elipse.png"));
             btnElipse.setIcon(new ImageIcon(btnElipseImg));
         }
         catch (IOException e)
@@ -101,7 +105,7 @@ public class Janela extends JFrame
 
         try // mudar caminho do arquivo para imagem
         {
-            Image btnQuadradoImg = ImageIO.read(getClass().getResource("images/elipse.jpg"));
+            Image btnQuadradoImg = ImageIO.read(getClass().getResource("images/quadrado.png"));
             btnQuadrado.setIcon(new ImageIcon(btnQuadradoImg));
         }
         catch (IOException e)
@@ -114,8 +118,21 @@ public class Janela extends JFrame
 
         try // mudar caminho do arquivo para imagem
         {
-            Image btnRetanguloImg = ImageIO.read(getClass().getResource("images/elipse.jpg"));
+            Image btnRetanguloImg = ImageIO.read(getClass().getResource("images/retangulo.png"));
             btnRetangulo.setIcon(new ImageIcon(btnRetanguloImg));
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog (null,
+                    "Arquivo elipse.jpg não foi encontrado",
+                    "Arquivo de imagem ausente",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+        try // mudar caminho do arquivo para imagem
+        {
+            Image btnTextoImg = ImageIO.read(getClass().getResource("images/texto.png"));
+            btnTexto.setIcon(new ImageIcon(btnTextoImg));
         }
         catch (IOException e)
         {
@@ -127,7 +144,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnCoresImg = ImageIO.read(getClass().getResource("images/cores.jpg"));
+            Image btnCoresImg = ImageIO.read(getClass().getResource("images/cor.png"));
             btnCores.setIcon(new ImageIcon(btnCoresImg));
         }
         catch (IOException e)
@@ -140,7 +157,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnCores2Img = ImageIO.read(getClass().getResource("images/cores.jpg"));
+            Image btnCores2Img = ImageIO.read(getClass().getResource("images/preencher.png"));
             btnCores2.setIcon(new ImageIcon(btnCores2Img));
         }
         catch (IOException e)
@@ -153,7 +170,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnAbrirImg = ImageIO.read(getClass().getResource("images/abrir.jpg"));
+            Image btnAbrirImg = ImageIO.read(getClass().getResource("images/abrir.png"));
             btnAbrir.setIcon(new ImageIcon(btnAbrirImg));
         }
         catch (IOException e)
@@ -166,7 +183,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnSalvarImg = ImageIO.read(getClass().getResource("images/salvar.jpg"));
+            Image btnSalvarImg = ImageIO.read(getClass().getResource("images/salvar.png"));
             btnSalvar.setIcon(new ImageIcon(btnSalvarImg));
         }
         catch (IOException e)
@@ -179,7 +196,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnApagarImg = ImageIO.read(getClass().getResource("images/apagar.jpg"));
+            Image btnApagarImg = ImageIO.read(getClass().getResource("images/apagar.png"));
             btnApagar.setIcon(new ImageIcon(btnApagarImg));
         }
         catch (IOException e)
@@ -192,7 +209,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnSairImg = ImageIO.read(getClass().getResource("images/sair.jpg"));
+            Image btnSairImg = ImageIO.read(getClass().getResource("images/sair.png"));
             btnSair.setIcon(new ImageIcon(btnSairImg));
         }
         catch (IOException e)
@@ -203,8 +220,8 @@ public class Janela extends JFrame
                                            JOptionPane.WARNING_MESSAGE);
         }
 
-        btnAbrir.addActionListener (new DesenhoDePonto()); //mudar classe
-        btnSalvar.addActionListener (new DesenhoDePonto()); //mudar classe
+        btnAbrir.addActionListener (new Abrir());
+        btnSalvar.addActionListener (new Salvar());
 
         btnPonto.addActionListener (new DesenhoDePonto());
         btnLinha.addActionListener (new DesenhoDeReta ());
@@ -212,11 +229,12 @@ public class Janela extends JFrame
         btnElipse.addActionListener (new DesenhoDeElipse ());
         btnQuadrado.addActionListener (new DesenhoDeQuadrado ());
         btnRetangulo.addActionListener (new DesenhoDeRetangulo ());
+        btnTexto.addActionListener (new DesenhoDeTexto ());
 
         btnCores.addActionListener (new SelecaoDeCorPrincipal());
         btnCores2.addActionListener (new SelecaoDeCorPreenchimento());
 
-        btnApagar.addActionListener (new DesenhoDePonto()); //mudar classe
+        btnApagar.addActionListener (new Apagar()); //mudar classe
         btnSair.addActionListener ( new Sair());
 
         JPanel     pnlBotoes = new JPanel();
@@ -231,6 +249,7 @@ public class Janela extends JFrame
         pnlBotoes.add (btnElipse);
         pnlBotoes.add (btnQuadrado);
         pnlBotoes.add (btnRetangulo);
+        pnlBotoes.add (btnTexto);
         pnlBotoes.add (btnCores);
         pnlBotoes.add (btnCores2);
         pnlBotoes.add (btnApagar);
@@ -255,11 +274,10 @@ public class Janela extends JFrame
         this.setVisible (true);
     }
 
-    protected class MeuJPanel extends    JPanel 
-                              implements MouseListener,
-                                         MouseMotionListener
+    protected class MeuJPanel extends JPanel implements MouseListener, MouseMotionListener
     {
 	public MeuJPanel()
+
         {
             super();
 
@@ -338,7 +356,7 @@ public class Janela extends JFrame
                 esperaFimElipse = false;
                 int r1 = e.getX()-p1.getX();
                 int r2 = e.getY()-p1.getY();
-                figuras.add (new Elipse(p1.getX(), p1.getY(), r1, r2, corPrincipal));
+                figuras.add (new Elipse(p1.getX(), p1.getY(), r1, r2, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
@@ -347,7 +365,7 @@ public class Janela extends JFrame
                 esperaFimQuadrado = false;
                 int b = e.getX()-p1.getX();
                 int h = b;
-                figuras.add (new Quadrilatero(p1.getX(), p1.getY(), b, h, corPrincipal));
+                figuras.add (new Quadrilatero(p1.getX(), p1.getY(), b, h, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
@@ -356,7 +374,7 @@ public class Janela extends JFrame
                 esperaFimRetangulo = false;
                 int b = e.getX()-p1.getX();
                 int h = e.getY()-p1.getY();
-                figuras.add (new Quadrilatero(p1.getX(), p1.getY(), b, h, corPrincipal));
+                figuras.add (new Quadrilatero(p1.getX(), p1.getY(), b, h, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
@@ -501,6 +519,26 @@ public class Janela extends JFrame
         }
     }
 
+    protected class DesenhoDeTexto implements ActionListener
+    {
+        public void actionPerformed (ActionEvent e)
+        {
+            esperaPonto           = false;
+            esperaInicioReta      = false;
+            esperaInicioCirculo   = false;
+            esperaInicioElipse    = false;
+            esperaInicioQuadrado  = false;
+            esperaInicioRetangulo = false;
+            esperaFimReta         = false;
+            esperaFimCirculo      = false;
+            esperaFimElipse       = false;
+            esperaFimQuadrado     = false;
+            esperaFimRetangulo    = false;
+
+            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
+        }
+    }
+
     public class SelecaoDeCorPrincipal implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
@@ -525,6 +563,105 @@ public class Janela extends JFrame
         }
     }
 
+    protected class Apagar implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            // Limpa a lista de figuras
+            figuras.clear();
+
+            // Cria uma imagem temporária para o duplo-buffer
+            BufferedImage tempImage = new BufferedImage(pnlDesenho.getWidth(), pnlDesenho.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D tempGraphics = tempImage.createGraphics();
+
+            // Pinta o fundo branco na imagem temporária
+            tempGraphics.setColor(Color.WHITE);
+            tempGraphics.fillRect(0, 0, pnlDesenho.getWidth(), pnlDesenho.getHeight());
+
+            // Desenha todas as figuras na imagem temporária
+            for (Figura figura : figuras) {
+                figura.torneSeVisivel(tempGraphics);
+            }
+
+            // Libera o contexto gráfico temporário
+            tempGraphics.dispose();
+
+            // Obtém o contexto gráfico do painel
+            Graphics g = pnlDesenho.getGraphics();
+
+            // Desenha a imagem temporária no painel
+            g.drawImage(tempImage, 0, 0, pnlDesenho);
+
+            // Libera o contexto gráfico do painel
+            g.dispose();
+        }
+    }
+
+
+
+
+    protected class Salvar implements ActionListener
+    {
+        public void actionPerformed (ActionEvent e)
+        {
+            BufferedImage image = new BufferedImage(pnlDesenho.getWidth(), pnlDesenho.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+            // Obtém o contexto gráfico da imagem
+            Graphics g = image.getGraphics();
+
+            // Pinta o fundo branco
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, image.getWidth(), image.getHeight());
+
+            // Desenha todas as figuras na imagem
+            for (Figura figura : figuras) {
+                figura.torneSeVisivel(g);
+            }
+
+            // Libera o contexto gráfico
+            g.dispose();
+
+            // Salva a imagem em um arquivo
+            try {
+                File outputFile = new File("saved\\paint-java"+System.currentTimeMillis()+".png");
+                ImageIO.write(image, "png", outputFile);
+                JOptionPane.showMessageDialog(null, "Imagem salva com sucesso em: " + outputFile.getAbsolutePath());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    public class Abrir implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif");
+            fileChooser.setFileFilter(filter);
+
+            int returnVal = fileChooser.showOpenDialog(null);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+
+                try {
+                    // Carrega a imagem do arquivo
+                    BufferedImage imagem = ImageIO.read(file);
+
+                    // Redimensiona a imagem para o tamanho do painel
+                    BufferedImage resizedImage = new BufferedImage(pnlDesenho.getWidth(), pnlDesenho.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                    Graphics2D g = resizedImage.createGraphics();
+                    g.drawImage(imagem, 0, 0, pnlDesenho.getWidth(), pnlDesenho.getHeight(), null);
+                    g.dispose();
+
+                    // Desenha a imagem no painel
+                    pnlDesenho.getGraphics().drawImage(resizedImage, 0, 0, pnlDesenho);
+
+                    JOptionPane.showMessageDialog(null, "Imagem carregada com sucesso!");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
     protected class FechamentoDeJanela extends WindowAdapter
     {
         public void windowClosing (WindowEvent e)
@@ -532,4 +669,7 @@ public class Janela extends JFrame
             System.exit(0);
         }
     }
+
+
+
 }
