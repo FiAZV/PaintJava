@@ -88,4 +88,68 @@ public class Quadrilatero extends Figura
                 ":" +
                 this.getCor().getBlue();
     }
+
+    public boolean equals (Object obj){
+        if (obj==this) return true;
+        if (obj==null) return false;
+        if (obj.getClass()!=this.getClass()) return false;
+
+        Quadrilatero outroQuadrilatero = (Quadrilatero)obj;
+        if (outroQuadrilatero.base!=this.base || outroQuadrilatero.altura!=this.altura || outroQuadrilatero.p1!=this.p1)
+            return false;
+
+        return true;
+    };
+    public int hashCode (){
+        int hashCode = 11;
+
+        hashCode = 7*hashCode + Integer.valueOf(this.base).hashCode();
+        hashCode = 7*hashCode + Integer.valueOf(this.altura).hashCode();
+        hashCode = 7*hashCode + this.p1.hashCode();
+
+        if (hashCode<0) hashCode = -hashCode;
+
+        return hashCode;
+    };
+
+    public Quadrilatero (Quadrilatero objModelo) throws Exception
+    {
+        if (objModelo==null) throw new Exception ("modelo ausente");
+
+        this.p1     = objModelo.p1;
+        this.base   = objModelo.base;
+        this.altura = objModelo.altura;
+
+    }
+    public Object clone ()
+    {
+        Quadrilatero clone = null;
+
+        try
+        {
+            clone = new Quadrilatero (this);
+        }
+        catch (Exception erro)
+        {} // sabemos que nao vai ocorrer excecao no try acima
+
+        return clone;
+    };
+
+    public int compareTo (Quadrilatero outroQuadrilatero) throws Exception
+    {
+        if (outroQuadrilatero==null) throw new Exception ("objeto inválido");
+
+        int areaThis = this.base * this.altura;
+        int areaOutroQuadrilatero = outroQuadrilatero.base * outroQuadrilatero.altura;
+
+        if (areaThis < areaOutroQuadrilatero){
+            return -1;
+        }
+        if (areaThis > areaOutroQuadrilatero){
+            return 1;
+        }
+
+        return 0;
+    }
+
 }

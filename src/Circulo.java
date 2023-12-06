@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.util.*;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 public class Circulo extends Figura
 {
     protected Ponto centro;
@@ -92,4 +95,63 @@ public class Circulo extends Figura
                ":" +
                this.getCor().getBlue();
     }
+
+    public boolean equals (Object obj){
+        if (obj==this) return true;
+        if (obj==null) return false;
+        if (obj.getClass()!=this.getClass()) return false;
+
+        Circulo outroCirculo = (Circulo)obj;
+        if (outroCirculo.centro!=this.centro || outroCirculo.raio!=this.raio)
+            return false;
+
+        return true;
+    };
+    public int hashCode (){
+        int hashCode = 11;
+
+        hashCode = 7*hashCode + Integer.valueOf(this.raio).hashCode();
+        hashCode = 7*hashCode + this.centro.hashCode();
+
+        if (hashCode<0) hashCode = -hashCode;
+
+        return hashCode;
+    };
+
+    public Circulo (Circulo objModelo) throws Exception
+    {
+        if (objModelo==null) throw new Exception ("modelo ausente");
+
+        this.centro = objModelo.centro;
+        this.raio = objModelo.raio;
+
+    }
+    public Object clone ()
+    {
+        Circulo clone = null;
+
+        try
+        {
+            clone = new Circulo (this);
+        }
+        catch (Exception erro)
+        {} // sabemos que nao vai ocorrer excecao no try acima
+
+        return clone;
+    };
+
+    public int compareTo (Circulo outroCirculo) throws Exception
+    {
+        if (outroCirculo==null) throw new Exception ("objeto inválido");
+
+        if (this.raio < outroCirculo.raio){
+            return -1;
+        }
+        if (this.raio > outroCirculo.raio){
+            return 1;
+        }
+
+        return 0;
+    }
+
 }

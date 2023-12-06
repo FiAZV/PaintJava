@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.util.*;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 public class Linha extends Figura
 {
     protected Ponto p1, p2;
@@ -70,8 +73,7 @@ public class Linha extends Figura
         graphSettings.setStroke(new BasicStroke(4));
 
         g.setColor(this.cor);
-        g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
-                this.p2.getX(), this.p2.getY());  // ponto final
+        g.drawLine(this.p1.getX(), this.p1.getY(), this.p2.getX(), this.p2.getY());
     }
 
     public String toString()
@@ -90,5 +92,67 @@ public class Linha extends Figura
                 this.getCor().getGreen() +
                 ":" +
                 this.getCor().getBlue();
+    }
+
+
+    public boolean equals (Object obj){
+        if (obj==this) return true;
+        if (obj==null) return false;
+        if (obj.getClass()!=this.getClass()) return false;
+
+        Linha outraLinha = (Linha)obj;
+        if (outraLinha.p1!=this.p1 || outraLinha.p2!=this.p2)
+            return false;
+
+        return true;
+    };
+    public int hashCode (){
+        int hashCode = 11;
+
+        hashCode = 7*hashCode + this.p1.hashCode();
+        hashCode = 7*hashCode + this.p2.hashCode();
+
+        if (hashCode<0) hashCode = -hashCode;
+
+        return hashCode;
+    };
+
+    public Linha (Linha objModelo) throws Exception
+    {
+        if (objModelo==null) throw new Exception ("modelo ausente");
+
+        this.p1 = objModelo.p1;
+        this.p2 = objModelo.p2;
+
+    }
+    public Object clone ()
+    {
+            Linha clone = null;
+
+            try
+            {
+                clone = new Linha (this);
+            }
+            catch (Exception erro)
+            {} // sabemos que nao vai ocorrer excecao no try acima
+
+            return clone;
+    };
+
+    public int compareTo (Linha outraLinha) throws Exception
+    {
+        if (outraLinha==null) throw new Exception ("objeto inválido");
+
+        double distThis = sqrt(pow(this.p1.getX() - this.p2.getX(), 2) + pow(this.p1.getY() - this.p2.getY(), 2));
+        double distOutraLinha = sqrt(pow(outraLinha.p1.getX() - outraLinha.p2.getX(), 2) + pow(outraLinha.p1.getY() - outraLinha.p2.getY(), 2));
+
+        if (distThis < distOutraLinha){
+            return -1;
+        }
+        if (distThis > distOutraLinha){
+            return 1;
+        }
+
+        return 0;
     }
 }

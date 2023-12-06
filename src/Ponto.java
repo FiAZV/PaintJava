@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.util.*;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 public class Ponto extends Figura
 {
     protected int x,  y;
@@ -79,4 +82,49 @@ public class Ponto extends Figura
                ":" +
                this.getCor().getBlue();
     }
+
+    public boolean equals (Object obj){
+        if (obj==this) return true;
+        if (obj==null) return false;
+        if (obj.getClass()!=this.getClass()) return false;
+
+        Ponto outroPonto = (Ponto)obj;
+        if (outroPonto.x!=this.x || outroPonto.y!=this.y)
+            return false;
+
+        return true;
+    };
+    public int hashCode (){
+        int hashCode = 11;
+
+        hashCode = 7*hashCode + Integer.valueOf(this.x).hashCode();
+        hashCode = 7*hashCode + Integer.valueOf(this.y).hashCode();
+
+        if (hashCode<0) hashCode = -hashCode;
+
+        return hashCode;
+    };
+
+    public Ponto (Ponto objModelo) throws Exception
+    {
+        if (objModelo==null) throw new Exception ("modelo ausente");
+
+        this.x = objModelo.x;
+        this.y = objModelo.y;
+
+    }
+    public Object clone ()
+    {
+        Ponto clone = null;
+
+        try
+        {
+            clone = new Ponto (this);
+        }
+        catch (Exception erro)
+        {} // sabemos que nao vai ocorrer excecao no try acima
+
+        return clone;
+    };
+
 }

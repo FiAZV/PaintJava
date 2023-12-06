@@ -109,4 +109,68 @@ public class Elipse extends Figura
                ":" +
                this.getCor().getBlue();
     }
+
+    public boolean equals (Object obj){
+        if (obj==this) return true;
+        if (obj==null) return false;
+        if (obj.getClass()!=this.getClass()) return false;
+
+        Elipse outraElipse = (Elipse)obj;
+        if (outraElipse.centro!=this.centro || outraElipse.raio1!=this.raio1 || outraElipse.raio2!=this.raio2)
+            return false;
+
+        return true;
+    };
+    public int hashCode (){
+        int hashCode = 11;
+
+        hashCode = 7*hashCode + Integer.valueOf(this.raio1).hashCode();
+        hashCode = 7*hashCode + Integer.valueOf(this.raio2).hashCode();
+        hashCode = 7*hashCode + this.centro.hashCode();
+
+        if (hashCode<0) hashCode = -hashCode;
+
+        return hashCode;
+    };
+
+    public Elipse (Elipse objModelo) throws Exception
+    {
+        if (objModelo==null) throw new Exception ("modelo ausente");
+
+        this.centro = objModelo.centro;
+        this.raio1 = objModelo.raio1;
+        this.raio2 = objModelo.raio2;
+
+    }
+    public Object clone ()
+    {
+        Elipse clone = null;
+
+        try
+        {
+            clone = new Elipse (this);
+        }
+        catch (Exception erro)
+        {} // sabemos que nao vai ocorrer excecao no try acima
+
+        return clone;
+    };
+
+    public int compareTo (Elipse outraElipse) throws Exception
+    {
+        if (outraElipse==null) throw new Exception ("objeto inválido");
+
+        int areaThis = this.raio1 * this.raio2 * 3; //não possui e nem precisa de uma precisão grande, por isso foi usado pi=3
+        int areaOutraElipse = outraElipse.raio1 * outraElipse.raio2 * 3;
+
+        if (areaThis < areaOutraElipse){
+            return -1;
+        }
+        if (areaThis > areaOutraElipse){
+            return 1;
+        }
+
+        return 0;
+    }
+
 }
