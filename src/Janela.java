@@ -285,14 +285,17 @@ public class Janela extends JFrame
             this.addMouseMotionListener (this);
         }
 
-        public void paint (Graphics g)
-        {
-            for (int i=0 ; i<figuras.size(); i++)
-                figuras.get(i).torneSeVisivel(g);
-        }
-        
+//        public void paint (Graphics g)
+//        {
+//            for (int i=0 ; i<figuras.size(); i++)
+//                figuras.get(i).torneSeVisivel(g);
+//        }
+
+        int  xInicio, yInicio, xFim, yFim;
+
         public void mousePressed (MouseEvent e)
         {
+
             if (esperaPonto)
             {
                 figuras.add (new Ponto (e.getX(), e.getY(), corPrincipal));
@@ -305,76 +308,94 @@ public class Janela extends JFrame
                 esperaInicioReta = false;
                 esperaFimReta = true;
                 statusBar1.setText("Mensagem: clique o ponto final da reta");
+
+                xInicio = p1.getX();
+                yInicio = p1.getY();
             }
             else if (esperaInicioCirculo){
                 p1 = new Ponto (e.getX(), e.getY(), corPrincipal);
                 esperaInicioCirculo = false;
                 esperaFimCirculo = true;
                 statusBar1.setText("Mensagem: clique o ponto final do circulo");
+
+                xInicio = p1.getX();
+                yInicio = p1.getY();
             }
             else if (esperaInicioElipse){
                 p1 = new Ponto (e.getX(), e.getY(), corPrincipal);
                 esperaInicioElipse = false;
                 esperaFimElipse = true;
                 statusBar1.setText("Mensagem: clique o ponto final da elipse");
+
+                xInicio = p1.getX();
+                yInicio = p1.getY();
             }
             else if (esperaInicioQuadrado){
                 p1 = new Ponto (e.getX(), e.getY(), corPrincipal);
                 esperaInicioQuadrado = false;
                 esperaFimQuadrado = true;
                 statusBar1.setText("Mensagem: clique o ponto final da elipse");
+
+                xInicio = p1.getX();
+                yInicio = p1.getY();
             }
             else if (esperaInicioRetangulo){
                 p1 = new Ponto (e.getX(), e.getY(), corPrincipal);
                 esperaInicioRetangulo = false;
                 esperaFimRetangulo = true;
                 statusBar1.setText("Mensagem: clique o ponto final da elipse");
+
+                xInicio = p1.getX();
+                yInicio = p1.getY();
             }
 
         }
-        
+
         public void mouseReleased (MouseEvent e)
         {
+            xFim = e.getX();
+            yFim = e.getY();
+
             if (esperaFimReta)
             {
                 esperaInicioReta = false;
                 esperaFimReta = false;
-                figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corPrincipal));
+                figuras.add (new Linha(xInicio, yInicio, xFim, yFim, corPrincipal));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
             else if (esperaFimCirculo){
                 esperaInicioCirculo = false;
                 esperaFimCirculo = false;
-                int r = (int) sqrt(pow((e.getX()-p1.getX()), 2) + pow((e.getY()-p1.getY()),2));
-                figuras.add (new Circulo(p1.getX(), p1.getY(), r, corPrincipal, corPreenchimento));
+                int r = (int) sqrt(pow((xFim-xInicio), 2) + pow((yFim-yInicio),2));
+                figuras.add (new Circulo(xInicio, yInicio, r, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
             else if (esperaFimElipse){
                 esperaInicioElipse = false;
                 esperaFimElipse = false;
-                int r1 = e.getX()-p1.getX();
-                int r2 = e.getY()-p1.getY();
-                figuras.add (new Elipse(p1.getX(), p1.getY(), r1, r2, corPrincipal, corPreenchimento));
+                int r1 = (int) sqrt(pow((xFim-xInicio), 2));
+                int r2 = (int) sqrt(pow((yFim-yInicio), 2));
+                figuras.add (new Elipse(xInicio, yInicio, r1, r2, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
             else if (esperaFimQuadrado){
                 esperaInicioQuadrado = false;
                 esperaFimQuadrado = false;
-                int b = e.getX()-p1.getX();
+                int b = (int) sqrt(pow((xFim-xInicio), 2));
                 int h = b;
-                figuras.add (new Quadrilatero(p1.getX(), p1.getY(), b, h, corPrincipal, corPreenchimento));
+                figuras.add (new Quadrilatero(xInicio, yInicio, b, h, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
             else if (esperaFimRetangulo){
                 esperaInicioRetangulo = false;
                 esperaFimRetangulo = false;
-                int b = e.getX()-p1.getX();
-                int h = e.getY()-p1.getY();
-                figuras.add (new Quadrilatero(p1.getX(), p1.getY(), b, h, corPrincipal, corPreenchimento));
+                int b = (int) sqrt(pow((xFim-xInicio), 2));
+                int h = (int) sqrt(pow((yFim-yInicio), 2));
+                figuras.add (new Quadrilatero(xInicio, yInicio, b, h, corPrincipal, corPreenchimento));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 statusBar1.setText("Mensagem:");
             }
@@ -391,6 +412,54 @@ public class Janela extends JFrame
         
         public void mouseDragged(MouseEvent e)
         {
+                // Atualiza as coordenadas finais à medida que o mouse é arrastado
+                xFim = e.getX();
+                yFim = e.getY();
+
+                // Limpa o painel e desenha a linha contínua
+                pnlDesenho.repaint();
+        }
+
+        public void paint(Graphics g)
+        {
+            super.paint(g);
+            // Desenha todas as figuras existentes
+            for (Figura figura : figuras) {
+                figura.torneSeVisivel(g);
+            }
+
+            // Desenha a linha contínua enquanto o mouse é arrastado
+            if (esperaFimReta) {
+//                g.setColor(corPrincipal);
+                Linha linhaGuia = new Linha(xInicio, yInicio, xFim, yFim, corPrincipal);
+                linhaGuia.torneSeVisivel(g);
+            }
+            if (esperaFimCirculo) {
+
+                int r = (int) sqrt(pow((xFim-xInicio), 2) + pow((yFim-yInicio),2));
+                Circulo circuloGuia = new Circulo(xInicio, yInicio, r, corPrincipal, corPreenchimento);
+                circuloGuia.torneSeVisivel(g);
+            }
+            if (esperaFimElipse) {
+
+                int r1 = (int) sqrt(pow((xFim-xInicio), 2));
+                int r2 = (int) sqrt(pow((yFim-yInicio), 2));
+                Elipse elipseGuia = new Elipse(xInicio, yInicio, r1, r2, corPrincipal, corPreenchimento);
+                elipseGuia.torneSeVisivel(g);
+            }
+            if (esperaFimQuadrado) {
+                int b = (int) sqrt(pow((xFim-xInicio), 2));
+                int h = b;
+                Quadrilatero quadradoGuia = (new Quadrilatero(xInicio, yInicio, b, h, corPrincipal, corPreenchimento));
+                quadradoGuia.torneSeVisivel(g);
+            }
+            if (esperaFimRetangulo) {
+                int b = (int) sqrt(pow((xFim-xInicio), 2));
+                int h = (int) sqrt(pow((yFim-yInicio), 2));
+                Quadrilatero retanguloGuia = (new Quadrilatero(xInicio, yInicio, b, h, corPrincipal, corPreenchimento));
+                retanguloGuia.torneSeVisivel(g);
+            }
+
         }
 
         public void mouseMoved(MouseEvent e)
