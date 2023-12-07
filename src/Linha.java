@@ -42,26 +42,6 @@ public class Linha extends Figura
         this.cor = cor;
     }
 
-    public void setP1 (int x, int y)
-    {
-        this.p1 = new Ponto (x,y,this.getCor());
-    }
-
-    public void setP2 (int x, int y)
-    {
-        this.p2 = new Ponto (x,y,this.getCor());
-    }
-
-    public Ponto getP1 ()
-    {
-        return this.p1;
-    }
-
-    public Ponto getP2 ()
-    {
-        return this.p2;
-    }
-
     public void torneSeVisivel (Graphics g)
     {
         Graphics2D graphSettings = (Graphics2D)g;
@@ -74,6 +54,26 @@ public class Linha extends Figura
 
         g.setColor(this.cor);
         g.drawLine(this.p1.getX(), this.p1.getY(), this.p2.getX(), this.p2.getY());
+    }
+
+    public Ponto getP1 ()
+    {
+        return this.p1;
+    }
+
+    public Ponto getP2 ()
+    {
+        return this.p2;
+    }
+
+    public void setP1 (int x, int y)
+    {
+        this.p1 = new Ponto (x,y,this.getCor());
+    }
+
+    public void setP2 (int x, int y)
+    {
+        this.p2 = new Ponto (x,y,this.getCor());
     }
 
     public String toString()

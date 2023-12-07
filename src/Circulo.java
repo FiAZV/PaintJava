@@ -42,26 +42,6 @@ public class Circulo extends Figura
         this.cor    = cor;
     }
 
-    public void setCentro (int x, int y)
-    {
-        this.centro = new Ponto (x,y,this.getCor());
-    }
-
-    public void setRaio (int r)
-    {
-        this.raio = r;
-    }
-
-    public Ponto getCentro ()
-    {
-        return this.centro;
-    }
-
-    public int setRaio ()
-    {
-        return this.raio;
-    }
-
     public void torneSeVisivel (Graphics g)
     {
         Graphics2D graphSettings = (Graphics2D)g;
@@ -78,6 +58,26 @@ public class Circulo extends Figura
         graphSettings.setColor(this.cor);
         graphSettings.drawOval(this.centro.getX()-raio, this.centro.getY()-raio, 2*raio, 2*raio);
 			
+    }
+
+    public Ponto getCentro ()
+    {
+        return this.centro;
+    }
+
+    public int getRaio ()
+    {
+        return this.raio;
+    }
+
+    public void setCentro (int x, int y)
+    {
+        this.centro = new Ponto (x,y,this.getCor());
+    }
+
+    public void setRaio (int r)
+    {
+        this.raio = r;
     }
 
     public String toString()

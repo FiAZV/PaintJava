@@ -35,12 +35,12 @@ public class Janela extends JFrame
                      statusBar2 = new JLabel ("Coordenada:");
 
     protected boolean esperaPonto;
+    protected boolean esperaTexto;
     protected boolean esperaInicioReta, esperaFimReta;
     protected boolean esperaInicioCirculo, esperaFimCirculo;
     protected boolean esperaInicioElipse, esperaFimElipse;
     protected boolean esperaInicioQuadrado, esperaFimQuadrado;
     protected boolean esperaInicioRetangulo, esperaFimRetangulo;
-//    protected boolean escolhaDeCor;
 
     protected Color corPrincipal = Color.BLACK, corPreenchimento = new Color(0f, 0f, 0f, 0f);
     protected Ponto p1;
@@ -272,6 +272,7 @@ public class Janela extends JFrame
 
         this.setSize (700,500);
         this.setVisible (true);
+
     }
 
     protected class MeuJPanel extends JPanel implements MouseListener, MouseMotionListener
@@ -402,7 +403,16 @@ public class Janela extends JFrame
         }
         
         public void mouseClicked (MouseEvent e)
-        {}
+        {
+            if(esperaTexto) {
+                figuras.add(new Texto(e.getX(), e.getY(), corPrincipal));
+                figuras.lastElement().torneSeVisivel(pnlDesenho.getGraphics());
+                esperaTexto = false;
+
+//                // Remove o listener após a inserção do texto
+//                pnlDesenho.removeMouseListener(this);
+            }
+        }
         
         public void mouseEntered (MouseEvent e)
         {}
@@ -473,6 +483,7 @@ public class Janela extends JFrame
           public void actionPerformed (ActionEvent e)    
           {
               esperaPonto           = true;
+              esperaTexto           = false;
               esperaInicioReta      = false;
               esperaInicioCirculo   = false;
               esperaInicioElipse    = false;
@@ -483,8 +494,6 @@ public class Janela extends JFrame
               esperaFimElipse       = false;
               esperaFimQuadrado     = false;
               esperaFimRetangulo    = false;
-
-              statusBar1.setText("Mensagem: clique o local do ponto desejado");
           }
     }
 
@@ -493,6 +502,7 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)    
         {
             esperaPonto           = false;
+            esperaTexto           = false;
             esperaInicioReta      = true;
             esperaInicioCirculo   = false;
             esperaInicioElipse    = false;
@@ -503,8 +513,6 @@ public class Janela extends JFrame
             esperaFimElipse       = false;
             esperaFimQuadrado     = false;
             esperaFimRetangulo    = false;
-
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
 
@@ -513,6 +521,7 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)
         {
             esperaPonto           = false;
+            esperaTexto           = false;
             esperaInicioReta      = false;
             esperaInicioCirculo   = true;
             esperaInicioElipse    = false;
@@ -523,8 +532,6 @@ public class Janela extends JFrame
             esperaFimElipse       = false;
             esperaFimQuadrado     = false;
             esperaFimRetangulo    = false;
-
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
 
@@ -533,6 +540,7 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)
         {
             esperaPonto           = false;
+            esperaTexto           = false;
             esperaInicioReta      = false;
             esperaInicioCirculo   = false;
             esperaInicioElipse    = true;
@@ -543,8 +551,6 @@ public class Janela extends JFrame
             esperaFimElipse       = false;
             esperaFimQuadrado     = false;
             esperaFimRetangulo    = false;
-
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
 
@@ -553,6 +559,7 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)
         {
             esperaPonto           = false;
+            esperaTexto           = false;
             esperaInicioReta      = false;
             esperaInicioCirculo   = false;
             esperaInicioElipse    = false;
@@ -563,8 +570,6 @@ public class Janela extends JFrame
             esperaFimElipse       = false;
             esperaFimQuadrado     = false;
             esperaFimRetangulo    = false;
-
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
 
@@ -573,6 +578,7 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)
         {
             esperaPonto           = false;
+            esperaTexto           = false;
             esperaInicioReta      = false;
             esperaInicioCirculo   = false;
             esperaInicioElipse    = false;
@@ -583,16 +589,13 @@ public class Janela extends JFrame
             esperaFimElipse       = false;
             esperaFimQuadrado     = false;
             esperaFimRetangulo    = false;
-
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
 
-    protected class DesenhoDeTexto implements ActionListener
-    {
-        public void actionPerformed (ActionEvent e)
-        {
+    protected class DesenhoDeTexto implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
             esperaPonto           = false;
+            esperaTexto           = true;
             esperaInicioReta      = false;
             esperaInicioCirculo   = false;
             esperaInicioElipse    = false;
@@ -603,8 +606,6 @@ public class Janela extends JFrame
             esperaFimElipse       = false;
             esperaFimQuadrado     = false;
             esperaFimRetangulo    = false;
-
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
 
@@ -738,7 +739,6 @@ public class Janela extends JFrame
             System.exit(0);
         }
     }
-
 
 
 }

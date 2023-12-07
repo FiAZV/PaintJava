@@ -35,26 +35,6 @@ public class Ponto extends Figura
                               Integer.parseInt(quebrador.nextToken())); // B
     }
 
-    public void setX (int x)
-    {
-        this.x = x;
-    }
-	  
-    public void setY (int y)
-    {
-        this.y = y;
-    }
-	  
-    public int getX ()
-    {
-        return this.x;
-    }
-	  
-    public int getY ()
-    {
-    	return this.y;
-    }
-	  
     public void torneSeVisivel (Graphics g)
     {
         Graphics2D graphSettings = (Graphics2D)g;
@@ -67,6 +47,26 @@ public class Ponto extends Figura
 
     	g.setColor (this.cor);
     	g.drawLine (this.x,this.y,this.x,this.y);
+    }
+
+    public int getX ()
+    {
+        return this.x;
+    }
+
+    public int getY ()
+    {
+        return this.y;
+    }
+
+    public void setX (int x)
+    {
+        this.x = x;
+    }
+
+    public void setY (int y)
+    {
+        this.y = y;
     }
 
     public String toString()

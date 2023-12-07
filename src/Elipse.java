@@ -44,36 +44,6 @@ public class Elipse extends Figura
         this.cor    = cor;
     }
 
-    public void setCentro (int x, int y)
-    {
-        this.centro = new Ponto (x,y,this.getCor());
-    }
-
-    public void setRaio1 (int r1)
-    {
-        this.raio1 = r1;
-    }
-
-    public void setRaio2 (int r2)
-    {
-        this.raio2 = r2;
-    }
-
-    public Ponto getCentro ()
-    {
-        return this.centro;
-    }
-
-    public int setRaio1 ()
-    {
-        return this.raio1;
-    }
-
-    public int setRaio2 ()
-    {
-        return this.raio2;
-    }
-
     public void torneSeVisivel (Graphics g)
     {
         Graphics2D graphSettings = (Graphics2D)g;
@@ -90,6 +60,36 @@ public class Elipse extends Figura
         graphSettings.setColor (this.cor);
         graphSettings.drawOval (this.centro.getX()-raio1, this.centro.getY()-raio2, 2*raio1, 2*raio2);
 			
+    }
+
+    public Ponto getCentro ()
+    {
+        return this.centro;
+    }
+
+    public int getRaio1 ()
+    {
+        return this.raio1;
+    }
+
+    public int getRaio2 ()
+    {
+        return this.raio2;
+    }
+
+    public void setCentro (int x, int y)
+    {
+        this.centro = new Ponto (x,y,this.getCor());
+    }
+
+    public void setRaio1 (int r1)
+    {
+        this.raio1 = r1;
+    }
+
+    public void setRaio2 (int r2)
+    {
+        this.raio2 = r2;
     }
 
     public String toString()

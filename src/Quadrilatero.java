@@ -43,15 +43,6 @@ public class Quadrilatero extends Figura
         this.cor    = cor;
     }
 
-    public void setP1 (int x, int y)
-    {
-        this.p1 = new Ponto (x,y,this.getCor());
-    }
-
-    public Ponto getP1 () {
-        return this.p1;
-    }
-
 
     public void torneSeVisivel (Graphics g)
     {
@@ -69,6 +60,30 @@ public class Quadrilatero extends Figura
         g.setColor (this.cor);
         g.drawRect (this.p1.getX(), this.p1.getY(), this.base, this.altura);
 
+    }
+
+    public Ponto getP1 () {
+        return this.p1;
+    }
+
+    public int getBase() {
+        return base;
+    }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public void setP1(Ponto p1) {
+        this.p1 = p1;
+    }
+
+    public void setBase(int base) {
+        this.base = base;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
     }
 
     public String toString()
